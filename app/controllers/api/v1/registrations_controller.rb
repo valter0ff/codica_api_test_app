@@ -7,7 +7,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
     if resource.persisted?
       render json: {
         status: { code: 200, message: 'Signed up successfully.' },
-        data: { user: resource, token: resource.authentication_token }
+        data: { user: resource }
       }, status: :ok
     else
       render json: {

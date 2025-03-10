@@ -1,0 +1,382 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/sign_up":
+    post:
+      summary: Sign up user
+      tags:
+      - Registration
+      parameters: []
+      responses:
+        '200':
+          description: Success sign up
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    "$schema": https://json-schema.org/draft/2019-09/schema
+                    "$id": http://example.com/example.json
+                    type: object
+                    default: {}
+                    title: Root Schema
+                    required:
+                    - status
+                    - data
+                    properties:
+                      status:
+                        type: object
+                        default: {}
+                        title: The status Schema
+                        required:
+                        - code
+                        - message
+                        properties:
+                          code:
+                            type: integer
+                            default: 0
+                            title: The code Schema
+                            examples:
+                            - 200
+                          message:
+                            type: string
+                            default: ''
+                            title: The message Schema
+                            examples:
+                            - Signed up successfully.
+                        examples:
+                        - code: 200
+                          message: Signed up successfully.
+                      data:
+                        type: object
+                        default: {}
+                        title: The data Schema
+                        required:
+                        - user
+                        properties:
+                          user:
+                            type: object
+                            default: {}
+                            title: The user Schema
+                            required:
+                            - id
+                            - email
+                            - created_at
+                            - updated_at
+                            - authentication_token
+                            properties:
+                              id:
+                                type: integer
+                                default: 0
+                                title: The id Schema
+                                examples:
+                                - 1
+                              email:
+                                type: string
+                                default: ''
+                                title: The email Schema
+                                examples:
+                                - email@example.com
+                              created_at:
+                                type: string
+                                default: ''
+                                title: The created_at Schema
+                                examples:
+                                - '2025-03-10T17:06:42.281Z'
+                              updated_at:
+                                type: string
+                                default: ''
+                                title: The updated_at Schema
+                                examples:
+                                - '2025-03-10T17:06:42.281Z'
+                              authentication_token:
+                                type: string
+                                default: ''
+                                title: The authentication_token Schema
+                                examples:
+                                - x65HtHs4fkPF6twEBGbs
+                            examples:
+                            - id: 1
+                              email: email@example.com
+                              created_at: '2025-03-10T17:06:42.281Z'
+                              updated_at: '2025-03-10T17:06:42.281Z'
+                              authentication_token: x65HtHs4fkPF6twEBGbs
+                        examples:
+                        - user:
+                            id: 1
+                            email: email@example.com
+                            created_at: '2025-03-10T17:06:42.281Z'
+                            updated_at: '2025-03-10T17:06:42.281Z'
+                            authentication_token: x65HtHs4fkPF6twEBGbs
+                    examples:
+                    - status:
+                        code: 200
+                        message: Signed up successfully.
+                      data:
+                        user:
+                          id: 1
+                          email: email@example.com
+                          created_at: '2025-03-10T17:06:42.281Z'
+                          updated_at: '2025-03-10T17:06:42.281Z'
+                          authentication_token: x65HtHs4fkPF6twEBGbs
+        '422':
+          description: Invalid params
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    "$schema": https://json-schema.org/draft/2019-09/schema
+                    "$id": http://example.com/example.json
+                    type: object
+                    default: {}
+                    title: Root Schema
+                    required:
+                    - status
+                    properties:
+                      status:
+                        type: object
+                        default: {}
+                        title: The status Schema
+                        required:
+                        - code
+                        - message
+                        properties:
+                          code:
+                            type: integer
+                            default: 0
+                            title: The code Schema
+                            examples:
+                            - 422
+                          message:
+                            type: string
+                            default: ''
+                            title: The message Schema
+                            examples:
+                            - User couldn't be created. Password can't be blank
+                        examples:
+                        - code: 422
+                          message: User couldn't be created. Password can't be blank
+                    examples:
+                    - status:
+                        code: 422
+                        message: User couldn't be created. Password can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User`s email
+                password:
+                  type: string
+                  description: User`s password
+              required:
+              - email
+              - password
+  "/api/v1/sign_in":
+    post:
+      summary: Login user
+      tags:
+      - Session
+      parameters: []
+      responses:
+        '200':
+          description: Success login
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    "$schema": https://json-schema.org/draft/2019-09/schema
+                    "$id": http://example.com/example.json
+                    type: object
+                    default: {}
+                    title: Root Schema
+                    required:
+                    - status
+                    - data
+                    properties:
+                      status:
+                        type: object
+                        default: {}
+                        title: The status Schema
+                        required:
+                        - code
+                        - message
+                        properties:
+                          code:
+                            type: integer
+                            default: 0
+                            title: The code Schema
+                            examples:
+                            - 200
+                          message:
+                            type: string
+                            default: ''
+                            title: The message Schema
+                            examples:
+                            - Logged in successfully.
+                        examples:
+                        - code: 200
+                          message: Logged in successfully.
+                      data:
+                        type: object
+                        default: {}
+                        title: The data Schema
+                        required:
+                        - user
+                        properties:
+                          user:
+                            type: object
+                            default: {}
+                            title: The user Schema
+                            required:
+                            - authentication_token
+                            - email
+                            - id
+                            - created_at
+                            - updated_at
+                            properties:
+                              authentication_token:
+                                type: string
+                                default: ''
+                                title: The authentication_token Schema
+                                examples:
+                                - 6E97yDvCsxqTeb-tnRoi
+                              email:
+                                type: string
+                                default: ''
+                                title: The email Schema
+                                examples:
+                                - travis_heidenreich@denesik.example
+                              id:
+                                type: integer
+                                default: 0
+                                title: The id Schema
+                                examples:
+                                - 1
+                              created_at:
+                                type: string
+                                default: ''
+                                title: The created_at Schema
+                                examples:
+                                - '2025-03-10T03:05:20.682Z'
+                              updated_at:
+                                type: string
+                                default: ''
+                                title: The updated_at Schema
+                                examples:
+                                - '2025-03-10T03:05:20.713Z'
+                            examples:
+                            - authentication_token: 6E97yDvCsxqTeb-tnRoi
+                              email: travis_heidenreich@denesik.example
+                              id: 1
+                              created_at: '2025-03-10T03:05:20.682Z'
+                              updated_at: '2025-03-10T03:05:20.713Z'
+                        examples:
+                        - user:
+                            authentication_token: 6E97yDvCsxqTeb-tnRoi
+                            email: travis_heidenreich@denesik.example
+                            id: 1
+                            created_at: '2025-03-10T03:05:20.682Z'
+                            updated_at: '2025-03-10T03:05:20.713Z'
+                    examples:
+                    - status:
+                        code: 200
+                        message: Logged in successfully.
+                      data:
+                        user:
+                          authentication_token: 6E97yDvCsxqTeb-tnRoi
+                          email: travis_heidenreich@denesik.example
+                          id: 1
+                          created_at: '2025-03-10T03:05:20.682Z'
+                          updated_at: '2025-03-10T03:05:20.713Z'
+        '401':
+          description: Invalid params
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User`s email
+                password:
+                  type: string
+                  description: User`s password
+              required:
+              - email
+              - password
+  "/api/v1/sign_out":
+    delete:
+      summary: Logout user
+      tags:
+      - Session
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success logout
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    "$schema": https://json-schema.org/draft/2019-09/schema
+                    "$id": http://example.com/example.json
+                    type: object
+                    default: {}
+                    title: Root Schema
+                    required:
+                    - status
+                    properties:
+                      status:
+                        type: object
+                        default: {}
+                        title: The status Schema
+                        required:
+                        - code
+                        - message
+                        properties:
+                          code:
+                            type: integer
+                            default: 0
+                            title: The code Schema
+                            examples:
+                            - 200
+                          message:
+                            type: string
+                            default: ''
+                            title: The message Schema
+                            examples:
+                            - Logged out successfully.
+                        examples:
+                        - code: 200
+                          message: Logged out successfully.
+                    examples:
+                    - status:
+                        code: 200
+                        message: Logged out successfully.
+        '401':
+          description: Invalid token
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

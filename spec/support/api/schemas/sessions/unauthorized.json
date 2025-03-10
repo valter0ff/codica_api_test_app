@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "default": {},
+  "title": "Root Schema",
+  "required": [
+    "error"
+  ],
+  "properties": {
+    "error": {
+      "type": "string",
+      "default": "",
+      "title": "The error Schema",
+      "examples": [
+        "You need to sign in or sign up before continuing."
+      ]
+    }
+  },
+  "examples": [
+    {
+      "error": "You need to sign in or sign up before continuing."
+    }
+  ]
+}

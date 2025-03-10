@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "default": {},
+  "title": "Root Schema",
+  "required": [
+    "status",
+    "data"
+  ],
+  "properties": {
+    "status": {
+      "type": "object",
+      "default": {},
+      "title": "The status Schema",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "default": 0,
+          "title": "The code Schema",
+          "examples": [
+            200
+          ]
+        },
+        "message": {
+          "type": "string",
+          "default": "",
+          "title": "The message Schema",
+          "examples": [
+            "Signed up successfully."
+          ]
+        }
+      },
+      "examples": [
+        {
+          "code": 200,
+          "message": "Signed up successfully."
+        }
+      ]
+    },
+    "data": {
+      "type": "object",
+      "default": {},
+      "title": "The data Schema",
+      "required": [
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "type": "object",
+          "default": {},
+          "title": "The user Schema",
+          "required": [
+            "id",
+            "email",
+            "created_at",
+            "updated_at",
+            "authentication_token"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "default": 0,
+              "title": "The id Schema",
+              "examples": [
+                1
+              ]
+            },
+            "email": {
+              "type": "string",
+              "default": "",
+              "title": "The email Schema",
+              "examples": [
+                "email@example.com"
+              ]
+            },
+            "created_at": {
+              "type": "string",
+              "default": "",
+              "title": "The created_at Schema",
+              "examples": [
+                "2025-03-10T17:06:42.281Z"
+              ]
+            },
+            "updated_at": {
+              "type": "string",
+              "default": "",
+              "title": "The updated_at Schema",
+              "examples": [
+                "2025-03-10T17:06:42.281Z"
+              ]
+            },
+            "authentication_token": {
+              "type": "string",
+              "default": "",
+              "title": "The authentication_token Schema",
+              "examples": [
+                "x65HtHs4fkPF6twEBGbs"
+              ]
+            }
+          },
+          "examples": [
+            {
+              "id": 1,
+              "email": "email@example.com",
+              "created_at": "2025-03-10T17:06:42.281Z",
+              "updated_at": "2025-03-10T17:06:42.281Z",
+              "authentication_token": "x65HtHs4fkPF6twEBGbs"
+            }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "user": {
+            "id": 1,
+            "email": "email@example.com",
+            "created_at": "2025-03-10T17:06:42.281Z",
+            "updated_at": "2025-03-10T17:06:42.281Z",
+            "authentication_token": "x65HtHs4fkPF6twEBGbs"
+          }
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "status": {
+        "code": 200,
+        "message": "Signed up successfully."
+      },
+      "data": {
+        "user": {
+          "id": 1,
+          "email": "email@example.com",
+          "created_at": "2025-03-10T17:06:42.281Z",
+          "updated_at": "2025-03-10T17:06:42.281Z",
+          "authentication_token": "x65HtHs4fkPF6twEBGbs"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "default": {},
+  "title": "Root Schema",
+  "required": [
+    "status"
+  ],
+  "properties": {
+    "status": {
+      "type": "object",
+      "default": {},
+      "title": "The status Schema",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "default": 0,
+          "title": "The code Schema",
+          "examples": [
+            200
+          ]
+        },
+        "message": {
+          "type": "string",
+          "default": "",
+          "title": "The message Schema",
+          "examples": [
+            "Logged out successfully."
+          ]
+        }
+      },
+      "examples": [
+        {
+          "code": 200,
+          "message": "Logged out successfully."
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "status": {
+        "code": 200,
+        "message": "Logged out successfully."
+      }
+    }
+  ]
+}

@@ -78,6 +78,5 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers, type: :request
   config.include ActionDispatch::Integration::RequestHelpers
   config.include Devise::Test::IntegrationHelpers, type: :request
-  config.include Helpers::ApiHelper, type: :request
   config.extend Helpers::ResponseSchema, type: :request
 end

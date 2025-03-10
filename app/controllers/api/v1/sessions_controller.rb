@@ -6,26 +6,20 @@ class Api::V1::SessionsController < Devise::SessionsController
   def destroy
     if current_user
       current_user.update_column(:authentication_token, nil) # rubocop:disable Rails/SkipsModelValidations
-      render json: { status: { code: 200, message: 'Logged out successfully' } }, status: :ok
+      render json: { status: { code: 200, message: 'Logged out successfully.' } }, status: :ok
     else
-      render json: { status: { code: 401, message: 'User not found or already logged out' } }, status: :unauthorized
+      render json: { status: { code: 401, message: 'User not found or already logged out.' } }, status: :unauthorized
     end
   end
 
   private
 
   def respond_with(resource, _opts = {})
-    if current_user
-      resource.update(authentication_token: Devise.friendly_token) if resource.authentication_token.blank?
+    resource.update(authentication_token: Devise.friendly_token) if resource.authentication_token.blank?
 
-      render json: {
-        status: { code: 200, message: 'Logged in successfully.' },
-        data: { user: resource }
-      }, status: :ok
-    else
-      render json: {
-        status: { code: 401, message: 'Invalid login credentials.' }
-      }, status: :unauthorized
-    end
+    render json: {
+      status: { code: 200, message: 'Logged in successfully.' },
+      data: { user: resource }
+    }, status: :ok
   end
 end

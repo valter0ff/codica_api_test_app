@@ -1,7 +1,11 @@
+inherit_gem:
+  rswag-specs: .rubocop_rspec_alias_config.yml
+
 plugins:
   - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
@@ -44,6 +48,26 @@ Rails/FindById:
 Rails/SkipsModelValidations:
   Exclude:
     - 'app/models/store_order.rb'
+
+RSpec/MultipleExpectations:
+  Max: 10
+
+RSpec/NestedGroups:
+  Max: 6
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/StubbedMock:
+  Enabled: false
+
+RSpec/VariableName:
+  AllowedPatterns:
+    - '^[A-Z][\w-]*$'
+
+RSpec/ContextWording:
+  Exclude:
+    - 'spec/support/**/*'
 
 # Prefer &&/|| over and/or.
 Style/AndOr:
