@@ -1,7 +1,7 @@
-require:
+plugins:
+  - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
-  - rubocop-factory_bot
 
 AllCops:
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
@@ -112,6 +112,10 @@ Layout/IndentationWidth:
 Layout/LeadingCommentSpace:
   Enabled: true
 
+Layout/LineLength:
+  Exclude:
+    - '**/config/initializers/**/*'
+
 Layout/SpaceAfterColon:
   Enabled: true
 
@@ -158,6 +162,8 @@ Style/ExplicitBlockArgument:
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
+  Exclude:
+    - '**/spec/**/*'
 
 Style/MapToHash:
   Enabled: true
@@ -367,9 +373,8 @@ Performance/StringInclude:
 
 Metrics/BlockLength:
   Exclude:
-    - '**/test/**/*'
     - '**/spec/**/*'
-    - 'app/admin/**/*'
+    - 'lib/tasks/auto_annotate_models.rake'
 
 Metrics/MethodLength:
   Max: 15
