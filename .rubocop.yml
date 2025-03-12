@@ -21,6 +21,7 @@ AllCops:
     - '**/vendor/**/*'
     - '**/node_modules/**/*'
     - 'bin/bundle'
+    - 'db/schema.rb'
 
 Performance:
   Exclude:
@@ -35,6 +36,9 @@ Rails/AssertNot:
 Rails/RefuteMethods:
   Include:
     - '**/test/**/*'
+
+Rails/I18nLocaleTexts:
+  Enabled: false
 
 Rails/IndexBy:
   Enabled: true
@@ -68,6 +72,9 @@ RSpec/VariableName:
 RSpec/ContextWording:
   Exclude:
     - 'spec/support/**/*'
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
 
 # Prefer &&/|| over and/or.
 Style/AndOr:

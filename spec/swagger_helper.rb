@@ -40,4 +40,41 @@ RSpec.configure do |config|
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :yaml
+
+  config.after do |example|
+    next unless example.metadata[:rswag]
+
+    summary = example.metadata[:example_group][:description]
+    content = example.metadata[:response][:content] || {}
+    value = JSON.parse(response.body, symbolize_names: true) if response.body.present?
+    mime_type = response.media_type
+
+    example_spec = {
+      mime_type => {
+        examples: {
+          "#{summary}": {
+            value:
+          }
+        }
+      }
+    }
+    example.metadata[:response][:content] = content.deep_merge(example_spec) unless value.nil?
+    next unless example.metadata[:operation][:parameters]
+
+    # save the request payload as example
+    example.metadata[:operation][:parameters].each.with_index do |param, i|
+      value = send(param[:name])
+      name = summary
+
+      if param[:in] == :body
+        # parameters in body require to be added to request_examples
+        example.metadata[:operation][:request_examples] ||= []
+        example.metadata[:operation][:request_examples] << { value:, summary:, name: }
+      else
+        # parameters in query, path, headers, etc.... require to be added to examples
+        example.metadata[:operation][:parameters][i][:examples] ||= {}
+        example.metadata[:operation][:parameters][i][:examples][name] = { value: }
+      end
+    end
+  end
 end

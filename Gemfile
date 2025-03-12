@@ -6,6 +6,8 @@ ruby(File.read(File.join(File.dirname(__FILE__), '.ruby-version')).strip)
 
 gem 'bootsnap', require: false
 gem 'devise'
+gem 'jsonapi.rb'
+gem 'jsonapi-serializer'
 gem 'pg', '~> 1.1'
 gem 'puma', '>= 5.0'
 gem 'rack-cors'
