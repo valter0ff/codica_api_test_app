@@ -12,9 +12,15 @@ Rails.application.routes.draw do
         post 'sign_in', to: 'sessions#create'
         delete 'sign_out', to: 'sessions#destroy'
       end
+
       namespace :users do
         get :show
       end
+
+      resources :projects do
+        resources :tasks, only: %i[index create]
+      end
+      resources :tasks, only: %i[show update destroy]
     end
   end
 end
