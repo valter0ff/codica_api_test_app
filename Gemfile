@@ -15,9 +15,6 @@ gem 'rails', '~> 7.2.2'
 gem 'rswag'
 gem 'simple_token_authentication'
 gem 'tzinfo-data', platforms: %i[windows jruby]
-# gem "jbuilder"
-# gem "redis", ">= 4.0.1"
-# gem "bcrypt", "~> 3.1.7"
 
 group :development, :test do
   gem 'amazing_print'
