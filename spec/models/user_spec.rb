@@ -33,16 +33,4 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_db_index(:authentication_token) }
     it { is_expected.to have_db_index(:reset_password_token) }
   end
-
-  # describe 'ActiveModel validations' do
-  #   it { is_expected.to validate_presence_of(:price) }
-  #   it { is_expected.to validate_presence_of(:quantity) }
-  #   it { is_expected.to validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
-  #   it { is_expected.to validate_numericality_of(:quantity).is_greater_than_or_equal_to(1) }
-  # end
-
-  # describe 'ActiveRecord associations' do
-  #   it { is_expected.to belong_to(:store_cart) }
-  #   it { is_expected.to belong_to(:store_product) }
-  # end
 end
