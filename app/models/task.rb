@@ -27,5 +27,4 @@ class Task < ApplicationRecord
   enum :status, { new: 'new', in_progress: 'in_progress', completed: 'completed' }, prefix: true, validate: true
 
   validates :title, presence: true
-  # validates :status, presence: true, inclusion: { in: statuses.keys }
 end
