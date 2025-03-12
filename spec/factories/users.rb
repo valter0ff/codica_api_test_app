@@ -20,9 +20,18 @@
 #
 FactoryBot.define do
   factory :user do
-    email { Faker::Internet.email }
-    password { Faker::Internet.password(min_length: 6) }
-    password_confirmation { password }
+    email { Faker::Internet.unique.email }
+    password { Faker::Internet.unique.password(min_length: 6) }
     authentication_token { Devise.friendly_token }
+
+    transient do
+      projects_count { 2 }
+      project_params { [] }
+      project_options { {} }
+    end
+
+    trait :with_projects do
+      projects { build_list(:project, projects_count, *project_params, **project_options) }
+    end
   end
 end

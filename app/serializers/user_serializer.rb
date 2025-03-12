@@ -20,12 +20,7 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-class User < ApplicationRecord
-  acts_as_token_authenticatable
-
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-
-  has_many :projects, dependent: :destroy
-  has_many :tasks, through: :projects
+class UserSerializer < ApplicationSerializer
+  attributes :email, :authentication_token, :created_at, :updated_at
+  has_many :projects
 end

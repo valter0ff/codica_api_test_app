@@ -32,8 +32,6 @@ RSpec.describe 'Api::V1::Registrations', type: :request do
 
           expect(User.last).to have_attributes(email: email)
         end
-
-        examples 'application/json' => response_schema('registrations/sign_up')
       end
 
       response(422, 'Invalid params') do
@@ -46,8 +44,6 @@ RSpec.describe 'Api::V1::Registrations', type: :request do
             expect(response.parsed_body[:status][:message]).to eq("User couldn't be created. Password can't be blank")
             expect(response).to match_json_schema('registrations/errors')
           end
-
-          examples 'application/json' => response_schema('registrations/errors')
         end
 
         context 'when user with particular email already exists' do
@@ -61,8 +57,6 @@ RSpec.describe 'Api::V1::Registrations', type: :request do
             )
             expect(response).to match_json_schema('registrations/errors')
           end
-
-          examples 'application/json' => response_schema('registrations/errors')
         end
       end
     end

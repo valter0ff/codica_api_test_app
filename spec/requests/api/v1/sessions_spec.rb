@@ -35,8 +35,6 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
           expect(response.parsed_body[:status][:message]).to eq('Logged in successfully.')
           expect(response).to match_json_schema('sessions/sign_in')
         end
-
-        examples 'application/json' => response_schema('sessions/sign_in')
       end
 
       response(401, 'Invalid params') do
@@ -70,8 +68,6 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
           expect(response.parsed_body[:status][:message]).to eq('Logged out successfully.')
           expect(response).to match_json_schema('sessions/sign_out')
         end
-
-        examples 'application/json' => response_schema('sessions/sign_out')
       end
 
       response(401, 'Invalid token') do
