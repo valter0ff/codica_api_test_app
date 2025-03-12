@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "title": "Root Schema",
+  "type": "object",
+  "default": {},
+  "required": [
+    "errors"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "errors": {
+      "title": "The errors Schema",
+      "type": "array",
+      "default": [],
+      "additionalItems": false,
+      "items": {
+        "title": "A Schema",
+        "type": "object",
+        "default": {},
+        "required": [
+          "status",
+          "source",
+          "title",
+          "detail",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "title": "The status Schema",
+            "type": "string",
+            "default": ""
+          },
+          "source": {
+            "title": "The source Schema",
+            "type": "object",
+            "default": {},
+            "required": [
+              "pointer"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "pointer": {
+                "title": "The pointer Schema",
+                "type": "string",
+                "default": ""
+              }
+            }
+          },
+          "title": {
+            "title": "The title Schema",
+            "type": "string",
+            "default": ""
+          },
+          "detail": {
+            "title": "The detail Schema",
+            "type": "string",
+            "default": ""
+          },
+          "code": {
+            "title": "The code Schema",
+            "type": "string",
+            "default": ""
+          }
+        }
+      }
+    }
+  }
+}

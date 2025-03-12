@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "title": "Root Schema",
+  "type": "object",
+  "default": {},
+  "required": [
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "title": "The data Schema",
+      "type": "array",
+      "default": [],
+      "additionalItems": false,
+      "items": [
+        {
+          "title": "A Schema",
+          "type": "object",
+          "default": {},
+          "required": [
+            "id",
+            "type",
+            "attributes"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "title": "The id Schema",
+              "type": "string",
+              "default": ""
+            },
+            "type": {
+              "title": "The type Schema",
+              "type": "string",
+              "default": ""
+            },
+            "attributes": {
+              "title": "The attributes Schema",
+              "type": "object",
+              "default": {},
+              "required": [
+                "title",
+                "description",
+                "status",
+                "created_at",
+                "updated_at"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "title": {
+                  "title": "The title Schema",
+                  "type": "string",
+                  "default": ""
+                },
+                "description": {
+                  "title": "The description Schema",
+                  "type": "string",
+                  "default": ""
+                },
+                "status": {
+                  "title": "The status Schema",
+                  "type": "string",
+                  "default": ""
+                },
+                "created_at": {
+                  "title": "The created_at Schema",
+                  "type": "string",
+                  "default": ""
+                },
+                "updated_at": {
+                  "title": "The updated_at Schema",
+                  "type": "string",
+                  "default": ""
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "A Schema",
+          "type": "object",
+          "default": {},
+          "required": [
+            "id",
+            "type",
+            "attributes"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "title": "The id Schema",
+              "type": "string",
+              "default": ""
+            },
+            "type": {
+              "title": "The type Schema",
+              "type": "string",
+              "default": ""
+            },
+            "attributes": {
+              "title": "The attributes Schema",
+              "type": "object",
+              "default": {},
+              "required": [
+                "title",
+                "description",
+                "status",
+                "created_at",
+                "updated_at"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "title": {
+                  "title": "The title Schema",
+                  "type": "string",
+                  "default": ""
+                },
+                "description": {
+                  "title": "The description Schema",
+                  "type": "string",
+                  "default": ""
+                },
+                "status": {
+                  "title": "The status Schema",
+                  "type": "string",
+                  "default": ""
+                },
+                "created_at": {
+                  "title": "The created_at Schema",
+                  "type": "string",
+                  "default": ""
+                },
+                "updated_at": {
+                  "title": "The updated_at Schema",
+                  "type": "string",
+                  "default": ""
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

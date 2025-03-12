@@ -1,0 +1,1329 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/projects":
+    get:
+      summary: Current user projects index
+      tags:
+      - Projects
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        examples:
+          without relationships:
+            value: jospeh_mraz@nitzsche.test
+          with relationships:
+            value: thanh.mcglynn@flatley.example
+          with filter by ids:
+            value: ramiro@keebler-daugherty.test
+          when unauthenticated:
+            value: lashonda@fay.test
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        examples:
+          without relationships:
+            value: X7SGMWWU1fiub5KynZND
+          with relationships:
+            value: kfsHYtjGtQYH9BNBew2T
+          with filter by ids:
+            value: zBAWNgkKJPZ9btUzEyz_
+          when unauthenticated:
+            value: 
+        schema:
+          type: string
+      - name: include
+        in: query
+        explode: false
+        schema:
+          items:
+            type: string
+            enum:
+            - tasks
+          type: array
+        required: false
+        examples:
+          without relationships:
+            value: 
+          with relationships:
+            value:
+            - tasks
+          with filter by ids:
+            value: 
+          when unauthenticated:
+            value: 
+      - name: project_ids
+        in: query
+        explode: false
+        schema:
+          items:
+            type: integer
+            description: Project id
+          type: array
+        required: false
+        examples:
+          without relationships:
+            value: 
+          with relationships:
+            value: 
+          with filter by ids:
+            value:
+            - 6
+            - 7
+          when unauthenticated:
+            value: 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.api+json:
+              examples:
+                without relationships:
+                  value:
+                    data:
+                    - id: '1'
+                      type: project
+                      attributes:
+                        title: cum
+                        description: Et iure aliquam rerum.
+                        created_at: '2025-03-12T10:42:16.784Z'
+                        updated_at: '2025-03-12T10:42:16.784Z'
+                      relationships:
+                        tasks:
+                          data: []
+                    - id: '2'
+                      type: project
+                      attributes:
+                        title: consequuntur
+                        description: Recusandae optio perferendis architecto.
+                        created_at: '2025-03-12T10:42:16.786Z'
+                        updated_at: '2025-03-12T10:42:16.786Z'
+                      relationships:
+                        tasks:
+                          data: []
+                with relationships:
+                  value:
+                    data:
+                    - id: '3'
+                      type: project
+                      attributes:
+                        title: sed
+                        description: Est velit qui facere.
+                        created_at: '2025-03-12T10:42:16.855Z'
+                        updated_at: '2025-03-12T10:42:16.855Z'
+                      relationships:
+                        tasks:
+                          data:
+                          - id: '1'
+                            type: task
+                    included:
+                    - id: '1'
+                      type: task
+                      attributes:
+                        title: possimus
+                        description: Quae iure earum vel.
+                        status: new
+                        created_at: '2025-03-12T10:42:16.856Z'
+                        updated_at: '2025-03-12T10:42:16.856Z'
+                with filter by ids:
+                  value:
+                    data:
+                    - id: '6'
+                      type: project
+                      attributes:
+                        title: consequatur
+                        description: At qui amet corporis.
+                        created_at: '2025-03-12T10:42:16.924Z'
+                        updated_at: '2025-03-12T10:42:16.924Z'
+                      relationships:
+                        tasks:
+                          data: []
+                    - id: '7'
+                      type: project
+                      attributes:
+                        title: id
+                        description: Consequatur aliquid sint et.
+                        created_at: '2025-03-12T10:42:16.926Z'
+                        updated_at: '2025-03-12T10:42:16.926Z'
+                      relationships:
+                        tasks:
+                          data: []
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+    post:
+      summary: Create project
+      tags:
+      - Projects
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        examples:
+          Project is created:
+            value: bert.armstrong@walsh.example
+          when title is invalid:
+            value: arlen.prosacco@herman.test
+          when project with provided title already exists:
+            value: glenn@hartmann.example
+          when unauthenticated:
+            value: hugh@krajcik.test
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        examples:
+          Project is created:
+            value: kG6TxqnzAAMuD6qjZbX9
+          when title is invalid:
+            value: pxYysGAXocjuppYh2m8W
+          when project with provided title already exists:
+            value: 5f_dwLGAqapXBVV9xGGz
+          when unauthenticated:
+            value: 
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Project is created
+          content:
+            application/vnd.api+json:
+              examples:
+                Project is created:
+                  value:
+                    data:
+                      id: '12'
+                      type: project
+                      attributes:
+                        title: Cool project
+                        description: Cool description
+                        created_at: '2025-03-12T10:42:17.049Z'
+                        updated_at: '2025-03-12T10:42:17.049Z'
+                      relationships:
+                        tasks:
+                          data: []
+        '422':
+          description: Invalid parameters
+          content:
+            application/vnd.api+json:
+              examples:
+                when title is invalid:
+                  value:
+                    errors:
+                    - status: '422'
+                      source:
+                        pointer: "/data/attributes/title"
+                      title: Unprocessable Content
+                      detail: Title can't be blank
+                      code: blank
+                when project with provided title already exists:
+                  value:
+                    errors:
+                    - status: '422'
+                      source:
+                        pointer: "/data/attributes/title"
+                      title: Unprocessable Content
+                      detail: Title Project title must be unique for this user
+                      code: taken
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              required:
+              - project
+              properties:
+                title:
+                  type: string
+                  description: Project title
+                description:
+                  type: string
+                  description: Project description
+            examples:
+              Project is created:
+                summary: Project is created
+                value:
+                  project:
+                    title: Cool project
+                    description: Cool description
+              when title is invalid:
+                summary: when title is invalid
+                value:
+                  project:
+                    title: 
+                    description: Cool description
+              when project with provided title already exists:
+                summary: when project with provided title already exists
+                value:
+                  project:
+                    title: vitae
+                    description: Cool description
+              when unauthenticated:
+                summary: when unauthenticated
+                value:
+                  project:
+                    title: Cool project
+                    description: Cool description
+  "/api/v1/projects/{id}":
+    get:
+      summary: Show project
+      tags:
+      - Projects
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        examples:
+          Success:
+            value: emery@kris-ferry.test
+          with relationships:
+            value: daron_kunze@ullrich.example
+          when unauthenticated:
+            value: donte@herzog.test
+          when record not found:
+            value: vicki.toy@walter.example
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        examples:
+          Success:
+            value: EtWnPGZZsYyCVCy14YXD
+          with relationships:
+            value: P-K_xB3nyr786Rczy-8j
+          when unauthenticated:
+            value: 
+          when record not found:
+            value: yUEA_bYpvQzfKepxJYhs
+        schema:
+          type: string
+      - name: id
+        in: path
+        schema:
+          type: integer
+          description: Project id
+        required: true
+        examples:
+          Success:
+            value: 22
+          with relationships:
+            value: 25
+          when unauthenticated:
+            value: 28
+          when record not found:
+            value: 0
+      - name: include
+        in: query
+        explode: false
+        schema:
+          items:
+            type: string
+            enum:
+            - tasks
+          type: array
+        required: false
+        examples:
+          Success:
+            value: 
+          with relationships:
+            value:
+            - tasks
+          when unauthenticated:
+            value: 
+          when record not found:
+            value: 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.api+json:
+              examples:
+                Success:
+                  value:
+                    data:
+                      id: '22'
+                      type: project
+                      attributes:
+                        title: modi
+                        description: Tempore ut porro distinctio.
+                        created_at: '2025-03-12T10:42:17.278Z'
+                        updated_at: '2025-03-12T10:42:17.278Z'
+                      relationships:
+                        tasks:
+                          data: []
+                with relationships:
+                  value:
+                    data:
+                      id: '25'
+                      type: project
+                      attributes:
+                        title: nihil
+                        description: Nulla et dolor accusamus.
+                        created_at: '2025-03-12T10:42:17.340Z'
+                        updated_at: '2025-03-12T10:42:17.340Z'
+                      relationships:
+                        tasks:
+                          data:
+                          - id: '2'
+                            type: task
+                          - id: '3'
+                            type: task
+                    included:
+                    - id: '2'
+                      type: task
+                      attributes:
+                        title: non
+                        description: Consequatur tempore rerum vitae.
+                        status: new
+                        created_at: '2025-03-12T10:42:17.340Z'
+                        updated_at: '2025-03-12T10:42:17.340Z'
+                    - id: '3'
+                      type: task
+                      attributes:
+                        title: reiciendis
+                        description: Ut quisquam error minima.
+                        status: new
+                        created_at: '2025-03-12T10:42:17.341Z'
+                        updated_at: '2025-03-12T10:42:17.341Z'
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '404':
+          description: Invalid project id
+    put:
+      summary: Update project
+      tags:
+      - Projects
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        schema:
+          type: string
+        examples:
+          when unauthenticated:
+            value: sau.damore@jakubowski.test
+          when record not found:
+            value: frederic_anderson@ortiz.example
+          Project title already exists:
+            value: amparo_gutkowski@gottlieb.example
+      - name: X-User-Token
+        in: header
+        description: Access token
+        schema:
+          type: string
+        examples:
+          when unauthenticated:
+            value: 
+          when record not found:
+            value: z33gF58EYqxnydTz9YCd
+          Project title already exists:
+            value: 82xWnAY86kRY1dMS3GUQ
+      - name: id
+        in: path
+        schema:
+          type: integer
+          description: Project id
+        required: true
+        examples:
+          when unauthenticated:
+            value: 36
+          when record not found:
+            value: 0
+          Project title already exists:
+            value: 41
+      responses:
+        '200':
+          description: Project is updated
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '404':
+          description: Invalid project id
+        '422':
+          description: Project title already exists
+          content:
+            application/vnd.api+json:
+              examples:
+                Project title already exists:
+                  value:
+                    errors:
+                    - status: '422'
+                      source:
+                        pointer: "/data/attributes/title"
+                      title: Unprocessable Content
+                      detail: Title Project title must be unique for this user
+                      code: taken
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              required:
+              - project
+              properties:
+                title:
+                  type: string
+                  description: Project title
+                description:
+                  type: string
+                  description: Project description
+            examples:
+              when unauthenticated:
+                summary: when unauthenticated
+                value:
+                  project:
+                    title: New title
+              when record not found:
+                summary: when record not found
+                value:
+                  project:
+                    title: New title
+              Project title already exists:
+                summary: Project title already exists
+                value:
+                  project:
+                    title: eius
+    delete:
+      summary: Destroy project
+      tags:
+      - Projects
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        schema:
+          type: string
+        examples:
+          when unauthenticated:
+            value: arlie.murphy@goldner-hoeger.example
+          when record not found:
+            value: camellia@jones.test
+      - name: X-User-Token
+        in: header
+        description: Access token
+        schema:
+          type: string
+        examples:
+          when unauthenticated:
+            value: 
+          when record not found:
+            value: SqV9y7vs-R9qo76xh4Nw
+      - name: id
+        in: path
+        schema:
+          type: integer
+          description: Project id
+        required: true
+        examples:
+          when unauthenticated:
+            value: 46
+          when record not found:
+            value: 0
+      responses:
+        '204':
+          description: Project is destroyed
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '404':
+          description: Invalid project id
+  "/api/v1/sign_up":
+    post:
+      summary: Sign up user
+      tags:
+      - Registration
+      parameters: []
+      responses:
+        '200':
+          description: Success sign up
+        '422':
+          description: Invalid params
+          content:
+            application/json:
+              examples:
+                when invalid password:
+                  value:
+                    status:
+                      code: 422
+                      message: User couldn't be created. Password can't be blank
+                when user with particular email already exists:
+                  value:
+                    status:
+                      code: 422
+                      message: User couldn't be created. Email has already been taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User`s email
+                password:
+                  type: string
+                  description: User`s password
+              required:
+              - email
+              - password
+            examples:
+              when invalid password:
+                summary: when invalid password
+                value:
+                  user:
+                    email: email@example.com
+                    password: ''
+              when user with particular email already exists:
+                summary: when user with particular email already exists
+                value:
+                  user:
+                    email: email@example.com
+                    password: '123456'
+  "/api/v1/sign_in":
+    post:
+      summary: Login user
+      tags:
+      - Session
+      parameters: []
+      responses:
+        '200':
+          description: Success login
+        '401':
+          description: Invalid params
+          content:
+            application/json:
+              examples:
+                with invalid password:
+                  value:
+                    error: Invalid Email or password.
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User`s email
+                password:
+                  type: string
+                  description: User`s password
+              required:
+              - email
+              - password
+            examples:
+              with invalid password:
+                summary: with invalid password
+                value:
+                  user:
+                    email: kathleen@windler-franecki.test
+                    password: zzz
+              when unauthenticated:
+                summary: when unauthenticated
+                value: {}
+  "/api/v1/sign_out":
+    delete:
+      summary: Logout user
+      tags:
+      - Session
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        examples:
+          Success logout:
+            value: chanda@romaguera.test
+          Invalid token:
+            value: jere_schaden@sauer.example
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        examples:
+          Success logout:
+            value: rvVR9sBH5o1sVs4GassV
+          Invalid token:
+            value: 
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success logout
+          content:
+            application/json:
+              examples:
+                Success logout:
+                  value:
+                    status:
+                      code: 200
+                      message: Logged out successfully.
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                Invalid token:
+                  value:
+                    status:
+                      code: 401
+                      message: User not found or already logged out.
+  "/api/v1/projects/{project_id}/tasks":
+    get:
+      summary: Current user projects index
+      tags:
+      - Tasks
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        examples:
+          without filter by ids:
+            value: archie@thompson.test
+          with filter by ids:
+            value: tabetha@bergnaum.test
+          when unauthenticated:
+            value: hugo@steuber-waters.example
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        examples:
+          without filter by ids:
+            value: 84EeCn5jcHxNshARgvoG
+          with filter by ids:
+            value: 9RDjU3_PwymokGePD1sa
+          when unauthenticated:
+            value: 
+        schema:
+          type: string
+      - name: project_id
+        in: path
+        schema:
+          type: integer
+          description: Project id
+        required: true
+        examples:
+          without filter by ids:
+            value: 49
+          with filter by ids:
+            value: 50
+          when unauthenticated:
+            value: 51
+      - name: task_ids
+        in: query
+        explode: false
+        schema:
+          items:
+            type: integer
+            description: Task id
+          type: array
+        required: false
+        examples:
+          without filter by ids:
+            value: 
+          with filter by ids:
+            value:
+            - 8
+            - 9
+          when unauthenticated:
+            value: 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.api+json:
+              examples:
+                without filter by ids:
+                  value:
+                    data:
+                    - id: '4'
+                      type: task
+                      attributes:
+                        title: autem
+                        description: Voluptatibus et autem expedita.
+                        status: new
+                        created_at: '2025-03-12T10:42:18.094Z'
+                        updated_at: '2025-03-12T10:42:18.094Z'
+                    - id: '5'
+                      type: task
+                      attributes:
+                        title: illum
+                        description: Placeat et animi delectus.
+                        status: new
+                        created_at: '2025-03-12T10:42:18.095Z'
+                        updated_at: '2025-03-12T10:42:18.095Z'
+                with filter by ids:
+                  value:
+                    data:
+                    - id: '8'
+                      type: task
+                      attributes:
+                        title: earum
+                        description: Nisi voluptate facere aut.
+                        status: new
+                        created_at: '2025-03-12T10:42:18.155Z'
+                        updated_at: '2025-03-12T10:42:18.155Z'
+                    - id: '9'
+                      type: task
+                      attributes:
+                        title: alias
+                        description: Quod dolorem ut eos.
+                        status: new
+                        created_at: '2025-03-12T10:42:18.158Z'
+                        updated_at: '2025-03-12T10:42:18.158Z'
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+    post:
+      summary: Create task
+      tags:
+      - Tasks
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        examples:
+          Task is created:
+            value: alfred@olson.example
+          when title is invalid:
+            value: ali_erdman@sanford.test
+          when status is invalid:
+            value: irvin@rolfson-hegmann.example
+          when unauthenticated:
+            value: byron@monahan.test
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        examples:
+          Task is created:
+            value: 2rq6bsWYSgexwQzMrrPy
+          when title is invalid:
+            value: uyJv6i6z9M_sYwP29Vyy
+          when status is invalid:
+            value: YJBn1ikV5E5JdsV9ZcgU
+          when unauthenticated:
+            value: 
+        schema:
+          type: string
+      - name: project_id
+        in: path
+        schema:
+          type: integer
+          description: Project id
+        required: true
+        examples:
+          Task is created:
+            value: 52
+          when title is invalid:
+            value: 53
+          when status is invalid:
+            value: 54
+          when unauthenticated:
+            value: 55
+      responses:
+        '201':
+          description: Task is created
+          content:
+            application/vnd.api+json:
+              examples:
+                Task is created:
+                  value:
+                    data:
+                      id: '14'
+                      type: task
+                      attributes:
+                        title: Cool task
+                        description: Cool task
+                        status: new
+                        created_at: '2025-03-12T10:42:18.277Z'
+                        updated_at: '2025-03-12T10:42:18.277Z'
+        '422':
+          description: Invalid parameters
+          content:
+            application/vnd.api+json:
+              examples:
+                when title is invalid:
+                  value:
+                    errors:
+                    - status: '422'
+                      source:
+                        pointer: "/data/attributes/title"
+                      title: Unprocessable Content
+                      detail: Title can't be blank
+                      code: blank
+                when status is invalid:
+                  value:
+                    errors:
+                    - status: '422'
+                      source:
+                        pointer: "/data/attributes/status"
+                      title: Unprocessable Content
+                      detail: Status is not included in the list
+                      code: inclusion
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              required:
+              - task
+              properties:
+                title:
+                  type: string
+                  description: Task title
+                description:
+                  type: string
+                  description: Task description
+                status:
+                  type: string
+                  enum:
+                  - new
+                  - in_progress
+                  - completed
+                  description: Task status
+            examples:
+              Task is created:
+                summary: Task is created
+                value:
+                  task:
+                    title: Cool task
+                    description: Cool task
+              when title is invalid:
+                summary: when title is invalid
+                value:
+                  task:
+                    title: 
+                    description: Cool task
+              when status is invalid:
+                summary: when status is invalid
+                value:
+                  task:
+                    title: Cool task
+                    status: failed
+              when unauthenticated:
+                summary: when unauthenticated
+                value:
+                  task:
+                    title: Cool task
+                    description: Cool task
+  "/api/v1/tasks/{id}":
+    get:
+      summary: Show task
+      tags:
+      - Tasks
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        examples:
+          Success:
+            value: nannie@schroeder.test
+          when unauthenticated:
+            value: byron@blick.test
+          when record not found:
+            value: ernest@jenkins.example
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        examples:
+          Success:
+            value: UwGoKhpDQCfT_z_Hbh3y
+          when unauthenticated:
+            value: 
+          when record not found:
+            value: uEBYRYTfWXk4xNa4QZMD
+        schema:
+          type: string
+      - name: id
+        in: path
+        schema:
+          type: integer
+          description: Task id
+        required: true
+        examples:
+          Success:
+            value: 23
+          when unauthenticated:
+            value: 26
+          when record not found:
+            value: 0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.api+json:
+              examples:
+                Success:
+                  value:
+                    data:
+                      id: '23'
+                      type: task
+                      attributes:
+                        title: accusamus
+                        description: Dignissimos ipsa consequatur molestias.
+                        status: new
+                        created_at: '2025-03-12T10:42:18.491Z'
+                        updated_at: '2025-03-12T10:42:18.491Z'
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '404':
+          description: Invalid task id
+    put:
+      summary: Update task
+      tags:
+      - Tasks
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        schema:
+          type: string
+        examples:
+          when unauthenticated:
+            value: susann.lind@runolfsson-ward.test
+          when record not found:
+            value: shayna_johnson@bartell.example
+          when title is invalid:
+            value: sanjuana@haag.example
+          when status is invalid:
+            value: norris@schulist-howe.test
+      - name: X-User-Token
+        in: header
+        description: Access token
+        schema:
+          type: string
+        examples:
+          when unauthenticated:
+            value: 
+          when record not found:
+            value: Q9fShEjY4LyLNe3r_Gha
+          when title is invalid:
+            value: gyi_KzDetzBr2YcAwcJY
+          when status is invalid:
+            value: YvzFUg8dfRQFbQPZ9s_H
+      - name: id
+        in: path
+        schema:
+          type: integer
+          description: Task id
+        required: true
+        examples:
+          when unauthenticated:
+            value: 32
+          when record not found:
+            value: 0
+          when title is invalid:
+            value: 35
+          when status is invalid:
+            value: 38
+      responses:
+        '200':
+          description: Task is updated
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '404':
+          description: Invalid task id
+        '422':
+          description: Project title already exists
+          content:
+            application/vnd.api+json:
+              examples:
+                when title is invalid:
+                  value:
+                    errors:
+                    - status: '422'
+                      source:
+                        pointer: "/data/attributes/title"
+                      title: Unprocessable Content
+                      detail: Title can't be blank
+                      code: blank
+                when status is invalid:
+                  value:
+                    errors:
+                    - status: '422'
+                      source:
+                        pointer: "/data/attributes/status"
+                      title: Unprocessable Content
+                      detail: Status is not included in the list
+                      code: inclusion
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              required:
+              - task
+              properties:
+                title:
+                  type: string
+                  description: Task title
+                description:
+                  type: string
+                  description: Task description
+                status:
+                  type: string
+                  enum:
+                  - new
+                  - in_progress
+                  - completed
+                  description: Task status
+            examples:
+              when unauthenticated:
+                summary: when unauthenticated
+                value:
+                  task:
+                    title: New title
+              when record not found:
+                summary: when record not found
+                value:
+                  task:
+                    title: New title
+              when title is invalid:
+                summary: when title is invalid
+                value:
+                  task:
+                    title: 
+              when status is invalid:
+                summary: when status is invalid
+                value:
+                  task:
+                    title: New title
+                    status: failed
+    delete:
+      summary: Destroy task
+      tags:
+      - Tasks
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        schema:
+          type: string
+        examples:
+          when unauthenticated:
+            value: oscar_doyle@halvorson.example
+          when record not found:
+            value: taylor.pfannerstill@mueller.example
+      - name: X-User-Token
+        in: header
+        description: Access token
+        schema:
+          type: string
+        examples:
+          when unauthenticated:
+            value: 
+          when record not found:
+            value: czyuzJzRnhQjU5przyxY
+      - name: id
+        in: path
+        schema:
+          type: integer
+          description: Task id
+        required: true
+        examples:
+          when unauthenticated:
+            value: 44
+          when record not found:
+            value: 0
+      responses:
+        '204':
+          description: Task is destroyed
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '404':
+          description: Invalid project id
+  "/api/v1/users/show":
+    get:
+      summary: Show user info
+      tags:
+      - User
+      parameters:
+      - name: X-User-Email
+        in: header
+        description: User email
+        examples:
+          without relationships:
+            value: israel.russel@kozey.example
+          with relationships:
+            value: van_ledner@mclaughlin.test
+          when unauthenticated:
+            value: roderick@wilkinson.test
+        schema:
+          type: string
+      - name: X-User-Token
+        in: header
+        description: Access token
+        examples:
+          without relationships:
+            value: NurnfiZT2EGHs7soJ591
+          with relationships:
+            value: QgwzKY_YrsGsB9GXnToV
+          when unauthenticated:
+            value: 
+        schema:
+          type: string
+      - name: include
+        in: query
+        explode: false
+        schema:
+          items:
+            type: string
+            enum:
+            - projects
+            - projects.tasks
+          type: array
+        required: false
+        examples:
+          without relationships:
+            value: 
+          with relationships:
+            value:
+            - projects
+            - projects.tasks
+          when unauthenticated:
+            value: 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.api+json:
+              examples:
+                without relationships:
+                  value:
+                    data:
+                      id: '44'
+                      type: user
+                      attributes:
+                        email: israel.russel@kozey.example
+                        authentication_token: NurnfiZT2EGHs7soJ591
+                        created_at: '2025-03-12T10:42:18.911Z'
+                        updated_at: '2025-03-12T10:42:18.911Z'
+                      relationships:
+                        projects:
+                          data: []
+                with relationships:
+                  value:
+                    data:
+                      id: '45'
+                      type: user
+                      attributes:
+                        email: van_ledner@mclaughlin.test
+                        authentication_token: QgwzKY_YrsGsB9GXnToV
+                        created_at: '2025-03-12T10:42:18.964Z'
+                        updated_at: '2025-03-12T10:42:18.964Z'
+                      relationships:
+                        projects:
+                          data:
+                          - id: '64'
+                            type: project
+                    included:
+                    - id: '45'
+                      type: task
+                      attributes:
+                        title: eum
+                        description: Quos eveniet nemo et.
+                        status: new
+                        created_at: '2025-03-12T10:42:18.966Z'
+                        updated_at: '2025-03-12T10:42:18.966Z'
+                    - id: '64'
+                      type: project
+                      attributes:
+                        title: corrupti
+                        description: Excepturi voluptatem pariatur quaerat.
+                        created_at: '2025-03-12T10:42:18.965Z'
+                        updated_at: '2025-03-12T10:42:18.965Z'
+                      relationships:
+                        tasks:
+                          data:
+                          - id: '45'
+                            type: task
+        '401':
+          description: Invalid token
+          content:
+            application/json:
+              examples:
+                when unauthenticated:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
